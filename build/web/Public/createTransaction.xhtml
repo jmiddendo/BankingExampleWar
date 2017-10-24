@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>User Management</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <f:metadata>
+            <f:viewAction action="#{transactionRequestBean.getLoggedUser()}" ></f:viewAction>
+        </f:metadata>
+        <f:metadata>
+            <f:viewAction action="#{transactionManagedBean.getLoggedUser()}" ></f:viewAction>
+        </f:metadata>
+        <f:metadata>
+            <f:viewAction action="#{transactionRequestBean.refreshTotalAccountList()}" ></f:viewAction>
+        </f:metadata>
+        <h:outputStylesheet library="css" name="bootstrap.min.css"></h:outputStylesheet>
+        <h:outputStylesheet library="css" name="dataTable.css"></h:outputStylesheet>
+        <h:outputStylesheet library="css" name="jquery.dataTables.css"></h:outputStylesheet>
+        <h:outputScript library="js" name="jquery.js"></h:outputScript>
+        <h:outputScript library="js" name="jquery.dataTables.js"></h:outputScript>
+        <h:outputScript library="js" name="jquery-ui-1.12.1.js"></h:outputScript>
+        <h:outputScript library="js" name="workerScript.js"></h:outputScript> 
+        
+    </h:head>
+    <h:body>
+        
+        <ui:composition template="userMasterPage.xhtml">
+            
+            <ui:define name="banner" >
+                <div class="container-fluid no-padding" style="width:100%; margin: 0 auto">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <img src="resources/images/searchBanner.jpg" style="width:100%;margin: 30px auto" />
+                        </div>
+                    </div>
+                </div>
+            </ui:define>
+            
+            <ui:define name="content">
+        
+                <h:form id="myForm">
+                    
+                    <div>
+                        <h:outputLabel id="lblStatus" value="#{transactionRequestBean.status}" style="color: #00ff00" ></h:outputLabel>
+                    </div>
+                    
+                    <table>
+                        <tr>
+                            <td>
+                                <label>Transaction Id</label>
+                            </td>
+                            <td>
+                                <h:inputText id="txtId" value="#{transactionRequestBean.transaction.bankTransactionId}" converterMessage="Transaction Id must be an number">
+                                    <f:converter converterId="javax.faces.Integer" ></f:converter>
+                                </h:inputText>
+                                <h:message for="txtId" class="alert-danger" ></h:message>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>Transaction Name</label>
+                            </td>
+                            <td>
+                                <h:inputText id="txtTransactionName" value="#{transactionRequestBean.transaction.bankTransactionName}" 
+                                             required="true" requiredMessage="Transaction name is a required field!"
+                                             validatorMessage="Please enter a valid name.  A name should be between 6 and 30 characters!" >
+                                    <f:validateLength minimum="6" maximum="30" ></f:validateLength>
+                                </h:inputText>
+                                <h:message for="txtTransactionName" class="alert-danger"></h:message>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>Transaction Description</label>
+                            </td>
+                            <td>
+                                <h:inputText id="txtTransactionDescription" value="#{transactionRequestBean.transaction.description}" 
+                                             required="true" requiredMessage="Transaction description is a required field!"
+                                             validatorMessage="Please enter a valid description.  A description should be between 6 and 250 characters!">
+                                    <f:validateLength minimum="6" maximum="250" ></f:validateLength>
+                                </h:inputText>
+                                <h:message for="txtTransactionDescription" class="alert-danger"></h:message>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>Transaction Type</label>
+                            </td>
+                            <td>
+                                <h:selectOneMenu id="cboType" value="#{transactionRequestBean.type.transactionTypeId}" validatorMessage="Please choose a type!">
+                                    <f:selectItems value="#{transactionRequestBean.allTypes}" var="type" itemLabel="#{type.transactionTypeName}" itemValue="#{type.transactionTypeId}"/>
+                                    <f:converter converterId="javax.faces.Integer"></f:converter>
+                                    <f:validateLongRange minimum="1" ></f:validateLongRange>
+                                </h:selectOneMenu>
+                                <h:message for="cboType" class="alert-danger" ></h:message>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>Primary Account</label>
+                            </td>
+                            <td>
+                                <h:inputText id="txtPrimaryAccount" required="true" requiredMessage="Account is a required field!" value="#{transactionRequestBean.accPrimary.accountId}" converterMessage="Account must be a number!" >
+                                    <f:converter converterId="javax.faces.Integer"></f:converter>
+                                </h:inputText>
+                                <h:message for="txtPrimaryAccount" class="alert-danger" ></h:message>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>Transfer Account</label>
+                            </td>
+                            <td>
+                                <h:inputText id="txtSecondAccount" value="#{transactionRequestBean.accSecondary.accountId}"
+                                             converterMessage="Transfer account is an invalid format!"
+                                             validatorMessage="Tranfer account is an invalid format!">
+                                    <f:converter converterId="javax.faces.Integer"></f:converter>
+                                </h:inputText>
+                                <h:message for="txtSecondAccount" class="alert-danger"></h:message>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>Amount</label>
+                            </td>
+                            <td>
+                                <h:inputText id="txtAmount" value="#{transactionRequestBean.transaction.transactionAmount}" 
+                                             required="true" requiredMessage="Amount is a required field!" 
+                                             validatorMessage="Please enter a valid amount!"
+                                             converterMessage="Amount is in an invalid format!">
+                                    <f:converter converterId="javax.faces.Double" ></f:converter>
+                                    <f:validateDoubleRange minimum="0.01" ></f:validateDoubleRange>
+                                </h:inputText>
+                                <h:message for="txtAmount" class="alert-danger"></h:message>
+                            </td>
+                        </tr>
+                    </table>
+                    <br />
+                    <table id="tblTransaction" class="table" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Transaction ID</th>
+                                <th>Transaction Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ui:repeat id="Myrepeat" value="#{transactionRequestBean.dataList}" var="transaction" varStatus="status" >
+                                <tr onclick="populateTopForm('#{transaction.bankTransactionId}','#{transaction.bankTransactionName}','#{transaction.description}','#{transaction.type.transactionTypeId}','#{transaction.userAccount.accountId}','#{transaction.transactionAmount}')"
+                                    class="hoverStyle">
+                                    <td>#{transaction.bankTransactionId}</td>
+                                    <td>#{transaction.bankTransactionName}</td>
+                                </tr>
+                                <script>
+                                        function populateTopForm(id, tn, td, tt, pa, ta){
+                                            document.getElementById("myForm:txtId").value = id;
+                                            document.getElementById("myForm:txtTransactionName").value = tn;
+                                            document.getElementById("myForm:txtTransactionDescription").value = td;
+                                            document.getElementById("myForm:cboType").value = tt;
+                                            document.getElementById("myForm:txtPrimaryAccount").value = pa;
+                                            document.getElementById("myForm:txtAmount").value = ta;
+                                        }
+                                    </script>
+                            </ui:repeat>
+                        </tbody>
+                    </table>
+
+                    <h:commandButton id="cmdAdd" action="#{transactionRequestBean.addAccount()}" value="Add"></h:commandButton>
+                    <h:commandButton id="cmdView" action="#{transactionRequestBean.refreshTotalAccountList()}" value="View All" immediate="true" ></h:commandButton>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+    
+</html>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Transaction Type</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <h:outputStylesheet library="css" name="bootstrap.min.css"></h:outputStylesheet>
+        <h:outputStylesheet library="css" name="dataTable.css"></h:outputStylesheet>
+        <h:outputStylesheet library="css" name="jquery.dataTables.css"></h:outputStylesheet>
+        <h:outputScript library="js" name="jquery.js"></h:outputScript>
+        <h:outputScript library="js" name="jquery.dataTables.js"></h:outputScript>
+        <h:outputScript library="js" name="jquery-ui-1.12.1.js"></h:outputScript>
+        <h:outputScript library="js" name="workerScriptSearch.js"></h:outputScript>
+    </h:head>
+    <h:body>
+        <ui:composition template="workerMasterPage.xhtml">
+            
+            <ui:define name="content" >
+                
+                <h:form>
+                    
+                    <table>
+                        
+                        <tr>
+                            <td>
+                                <h:outputLabel id="lblTypeName" value="Type Name"></h:outputLabel>
+                            </td>
+                            <td>
+                                <h:inputText id="txtTypeName" value="#{transactionTypeAdd.transactionType.transactionTypeName}" required="true" requiredMessage="Please enter a transaction type name" ></h:inputText>
+                                <h:message for="txtTypeName" class="alert-danger" ></h:message>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td>
+                                <h:outputLabel id="lblTypeDescription" value="Type Descrpition"></h:outputLabel>
+                            </td>
+                            <td>
+                                <h:inputText id="txtTypeDescription" value="#{transactionTypeAdd.transactionType.transactionTypeDescription}" ></h:inputText>
+                                <h:message for="txtTypeDescription" class="alert-danger" ></h:message>
+                            </td>
+                        </tr>
+                        
+                    </table>
+                    
+                    <div>
+                        <h:outputLabel id="lblTransactions" value="#{transactionTypeAdd.webServiceResponse}"></h:outputLabel>
+                    </div>
+                    
+                    <h:commandButton id="cmdAddTransactionType" action="#{transactionTypeAdd.addTransactionType()}" value="Add Transaction Type" ></h:commandButton>
+                    <h:commandButton id="cmdSearchTransactions" action="#{transactionTypeAdd.searchBankTransactions()}" value="Get Transactions By Type" ></h:commandButton>
+                </h:form>
+
+            </ui:define>
+            
+        </ui:composition>
+    </h:body>
+</html>

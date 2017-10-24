@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html" 
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title></title>
+        <h:outputStylesheet library="css" name="pageOptions.css"></h:outputStylesheet>
+    </h:head>
+    <h:body>
+        <ui:composition>
+            <h:form>
+                <div id="header" class="header" >
+                    <div id="headerOpts" style="text-align: left; padding-left: 5px; width: 50%;" >
+                        <h:commandLink id="lnkViewAccounts" class="userNav" value="View Accounts" action="index" ></h:commandLink>
+                        <h:outputLabel id="lblAccSpacer" value="&#160;&#160;" class="labelText"></h:outputLabel>
+                        <h:commandLink id="lnkTransaction" class="userNav" value="Create Transaction" action="createTransaction" ></h:commandLink>
+                        <h:outputLabel id="lblSpacer" value="&#160;&#160;" class="labelText"></h:outputLabel>
+                        <h:commandLink id="lnkSearch" class="userNav" value="Search Transaction" action="userSearch" ></h:commandLink>
+                    </div>
+                    <div id="logDetails" style="text-align: right; padding-right: 5px; height: 25px;" >   
+                        <h:outputLabel id="lblHello" value="Welcome,&#160;" class="labelText"></h:outputLabel>
+                        <h:outputLabel id="lblIntro" class="labelText" value=" #{transactionManagedBean.customer.firstName} #{transactionManagedBean.customer.lastName} " ></h:outputLabel>
+                        <h:outputLabel id="lblFront" class="labelText" value="&#160;( " ></h:outputLabel>
+                        <h:commandLink id="lnkEdit" class="userNav" value="Edit Profile" action="userView" ></h:commandLink>
+                         | 
+                         <h:commandLink id="lnkLogout" class="userNav" value="Logout" action="#{transactionManagedBean.logoutUser()}" ></h:commandLink>
+                        <h:outputLabel id="lblEnd" class="labelText" value=" )" ></h:outputLabel>
+                    </div>
+                </div>
+            </h:form>
+        </ui:composition>
+    </h:body>
+</html>

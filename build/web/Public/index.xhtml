@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>User Summary</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <f:metadata>
+            <f:viewAction action="#{transactionManagedBean.getLoggedUser()}" ></f:viewAction>
+        </f:metadata>
+        <h:outputStylesheet library="css" name="bootstrap.min.css"></h:outputStylesheet>
+        <h:outputStylesheet library="css" name="dataTable.css"></h:outputStylesheet>
+        <h:outputStylesheet library="css" name="jquery.dataTables.css"></h:outputStylesheet>
+        <h:outputScript library="js" name="jquery.js"></h:outputScript>
+        <h:outputScript library="js" name="jquery.dataTables.js"></h:outputScript>
+        <h:outputScript library="js" name="jquery-ui-1.12.1.js"></h:outputScript>
+        <h:outputScript library="js" name="workerScript.js"></h:outputScript> 
+    </h:head>
+    <h:body>
+        <ui:composition template="userMasterPage.xhtml">
+            
+            <ui:define name="banner" >
+                <div class="container-fluid no-padding" style="width:100%; margin: 0 auto">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <img src="resources/images/searchBanner.jpg" style="width:100%;margin: 30px auto" />
+                        </div>
+                    </div>
+                </div>
+            </ui:define>
+            
+            <ui:define name="content" >
+                
+                <h:form>
+                    
+                    <table id="tblAccounts" >
+                        
+                        <thead>
+                            <th>
+                                Account Id
+                            </th>
+                            <th>
+                                Account Name
+                            </th>
+                            <th>
+                                Account Balance
+                            </th>
+                        </thead>
+                        
+                        <tbody>
+                            <ui:repeat id="accRepeat" value="#{transactionRequestBean.totalAccountList}" var="account" varStatus="status" >
+                                <tr>
+                                    <td>
+                                        #{account.accountId}
+                                    </td>
+                                    <td>
+                                        #{account.accountName}
+                                    </td>
+                                    <td>
+                                        #{account.accountBalance}
+                                    </td>
+                                </tr>
+                            </ui:repeat>
+                        </tbody>
+                        
+                    </table>
+                    
+                    
+                    
+                </h:form>
+                
+            </ui:define>
+            
+        </ui:composition>
+    </h:body>
+</html>

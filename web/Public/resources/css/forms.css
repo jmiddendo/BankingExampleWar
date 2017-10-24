@@ -1,0 +1,18 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Sep 21, 2017, 12:39:54 AM
+    Author     : jmid3
+*/
+
+.form-jeff {
+    margin: auto;
+    width: 20%;
+    padding: 10px;
+    background-color:  #5bc0de; 
+    border: 2px solid black; 
+    border-radius: 10px;
+}

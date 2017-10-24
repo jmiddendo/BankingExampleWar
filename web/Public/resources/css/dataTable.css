@@ -1,0 +1,44 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Sep 10, 2017, 12:58:22 AM
+    Author     : jmid3
+*/
+
+#tblTransaction  tr.even 
+{
+  background-color: #1793d0;
+}
+
+#tblTransaction  tr.even:hover 
+{
+  background-color: #00ff00;
+}
+
+#tblTransaction  tr.odd:hover 
+{
+  background-color: #00ff00;
+}
+
+#tblUsers  tr.even 
+{
+  background-color: #1793d0;
+}
+
+#tblUsers tr.even:hover 
+{
+  background-color: #00ff00;
+}
+
+#tblUsers tr.odd:hover 
+{
+  background-color: #00ff00;
+}
+
+#tblSearchUsers tr.even
+{
+    background-color: #1793d0;
+}

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>User Combination Search</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <h:outputStylesheet library="css" name="bootstrap.min.css"></h:outputStylesheet>
+        <h:outputStylesheet library="css" name="dataTable.css"></h:outputStylesheet>
+        <h:outputStylesheet library="css" name="jquery.dataTables.css"></h:outputStylesheet>
+        <h:outputScript library="js" name="jquery.js"></h:outputScript>
+        <h:outputScript library="js" name="jquery.dataTables.js"></h:outputScript>
+        <h:outputScript library="js" name="jquery-ui-1.12.1.js"></h:outputScript>
+        <h:outputScript library="js" name="workerScriptSearch.js"></h:outputScript>
+    </h:head>
+    <h:body>
+        <ui:composition template="workerMasterPage.xhtml">
+            
+            <ui:define name="content" >
+                
+                <h:form id="frmMain" >
+                    
+                    <table>
+                        <tr>
+                            <td>
+                                <label id="lblId" for="txtId" >Id</label>
+                            </td>
+                            <td>
+                                <h:inputText id="txtId" label="ID" value="#{userSearch.id}" class="form-control" >
+                                
+                                </h:inputText>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label id="lblFirstName" for="txtFirstName" >First Name</label>
+                            </td>
+                            <td>
+                                <h:inputText id="txtFirstName" label="First Name" value="#{userSearch.firstName}" class="form-control" >
+                                </h:inputText>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label id="lblLastName" for="txtLastName" >Last Name</label>
+                            </td>
+                            <td>
+                                <h:inputText id="txtLastName" label="Last Name" value="#{userSearch.lastName}" class="form-control" ></h:inputText>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label id="lblEmail" for="txtEmail" >Email</label>
+                            </td>
+                            <td>
+                                <h:inputText id="txtEmail" label="Email" value="#{userSearch.email}" class="form-control" ></h:inputText>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label id="lblType" for="txtType" >Type</label>
+                            </td>
+                            <td>
+                                <h:selectOneMenu id="cboUserType" value="#{userSearch.type}" class="form-control" >
+                                    <f:selectItems value="#{transactionManagedBean.allUserTypes}" var="type" itemValue="#{type}" ></f:selectItems>
+                                </h:selectOneMenu>
+                            </td>
+                        </tr>
+                    </table>
+                    
+                    <table id="tblSearchUsers" class="table" cellspacing="0" width="100%">
+                        <thead>
+                            <td>Id</td>
+                            <td>First Name</td>
+                            <td>Last Name</td>
+                            <td>Email</td>
+                            <td>Type</td>
+                            <td>Address</td>
+                        </thead>
+                        <tbody>
+                            <ui:repeat value="#{userSearch.searchResults}" var="user" >
+                                <tr>
+                                
+                                
+                                    <td>#{user.bankUserId}</td>
+                                    <td>#{user.firstName}</td>
+                                    <td>#{user.lastName}</td>
+                                    <td>#{user.email}</td>
+                                    <td>#{user.type}</td>
+                                    <td>#{user.address}</td>
+                                    
+                                
+                                </tr>
+                            </ui:repeat>
+                        </tbody>
+                    </table>
+                    
+                    <h:commandButton id="cmdSearch" action="#{userSearch.performCombinationSearch()}" value="Search" ></h:commandButton>
+                    
+                </h:form>
+                
+            </ui:define>
+            
+        </ui:composition>
+    </h:body>
+</html>

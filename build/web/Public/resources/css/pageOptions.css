@@ -1,0 +1,73 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Sep 21, 2017, 6:15:10 PM
+    Author     : jmid3
+*/
+
+.footer {
+    background-color: #035f8e; 
+    color: #ffffff; 
+    text-align: center;
+    width: 100%;
+}
+
+.header {
+    background-color: #035f8e; 
+    color: #ffffff; 
+}
+
+.footer a:link {
+    text-decoration:  none;
+    color:            white;
+}
+
+.footer a:visited {
+    text-decoration:  none;
+    color:            bisque;
+}
+
+.footer a:hover {
+    text-decoration:  none;
+    cursor:           pointer;
+    font-weight:      bold;
+    color:            #00ff00;
+}
+
+.footer a:active {
+    text-decoration:  none;
+    cursor:           grabbing;
+    font-weight:      bold;
+    color:            #00ff00;
+}
+
+.header a:link {
+    text-decoration:  none;
+    color:            white;
+}
+
+.header a:visited {
+    text-decoration:  none;
+    color:            bisque;
+}
+
+.header a:hover {
+    text-decoration:  none;
+    cursor:           pointer;
+    font-weight:      bold;
+    color:            #00ff00;
+}
+
+.header a:active {
+    text-decoration:  none;
+    cursor:           grab;
+    font-weight:      bold;
+    color:            #00ff00;
+}
+
+.labelText {
+    color: white;
+}

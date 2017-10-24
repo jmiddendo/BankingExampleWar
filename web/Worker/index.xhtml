@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>User Management</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <f:metadata>
+            <f:viewAction action="#{transactionManagedBean.getLoggedUser()}" ></f:viewAction>
+        </f:metadata>
+        <h:outputStylesheet library="css" name="bootstrap.min.css"></h:outputStylesheet>
+        <h:outputStylesheet library="css" name="dataTable.css"></h:outputStylesheet>
+        <h:outputStylesheet library="css" name="jquery.dataTables.css"></h:outputStylesheet>
+        <h:outputScript library="js" name="jquery.js"></h:outputScript>
+        <h:outputScript library="js" name="jquery.dataTables.js"></h:outputScript>
+        <h:outputScript library="js" name="jquery-ui-1.12.1.js"></h:outputScript>
+        <h:outputScript library="js" name="workerScript.js"></h:outputScript> 
+        <script>
+            
+            $( document ).ready(function() {
+                #{transactionManagedBean.clearUserFilter()}
+            });
+            
+        </script>
+        
+    </h:head>
+    <h:body>
+        
+        <ui:composition template="workerMasterPage.xhtml">
+            
+            <ui:define name="banner" >
+                <div class="container-fluid no-padding" style="width:100%; margin: 0 auto">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <img src="resources/images/workerBanner.jpg" style="width:100%;margin: 30px auto" />
+                        </div>
+                    </div>
+                </div>
+            </ui:define>
+            
+            <ui:define name="content">
+        
+                <h:form id="myForm">   
+                    
+                    <div>
+                        <h:outputLabel id="lblStatus" value="#{transactionManagedBean.status}" style="color: #00ff00"></h:outputLabel>
+                    </div>
+                    
+                    <table>
+                        <tr>
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <label>Id</label>
+                                        </td>
+                                        <td>
+                                            <h:inputText id="txtId" value="#{transactionManagedBean.user.bankUserId}" >
+                                            </h:inputText>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label>First Name</label>
+                                        </td>
+                                        <td>
+                                            <h:inputText id="txtFirstName" value="#{transactionManagedBean.user.firstName}" 
+                                                         required="true" requiredMessage="First name is a required field!"
+                                                         validatorMessage="Name must be letters only">
+                                                <f:validateRegex pattern="^[a-zA-Z]+$" ></f:validateRegex>
+                                            </h:inputText>
+                                            <h:message for="txtFirstName" class="alert-danger"></h:message>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label>Last Name</label>
+                                        </td>
+                                        <td>
+                                            <h:inputText id="txtLastName" value="#{transactionManagedBean.user.lastName}" 
+                                                         required="true" requiredMessage="Last name is a required field!"
+                                                         validatorMessage="Name must be letters only">
+                                                <f:validateRegex pattern="^[a-zA-Z]+$" ></f:validateRegex>
+                                            </h:inputText>
+                                            <h:message for="txtLastName" class="alert-danger"></h:message>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label>Phone Number</label>
+                                        </td>
+                                        <td>
+                                            <h:inputText id="txtPhone" value="#{transactionManagedBean.user.phoneNumber}" 
+                                                         required="true" requiredMessage="Phone number is a required field!" validatorMessage="Phone is an invalid format!">
+                                                <f:validateRegex pattern="^(?:\+?(61))? ?(?:\((?=.*\)))?(0?[2-57-8])\)? ?(\d\d(?:[- ](?=\d{3})|(?!\d\d[- ]?\d[- ]))\d\d[- ]?\d[- ]?\d{3})$" ></f:validateRegex>
+                                            </h:inputText>
+                                            <h:message for="txtPhone" class="alert-danger"></h:message> 
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label>User type</label>
+                                        </td>
+                                        <td>
+                                            <h:selectOneMenu id="cboType" class="form-control" value="#{transactionManagedBean.user.type}">
+                                                <f:selectItems value="#{transactionManagedBean.allUserTypes}" var="type" />
+                                            </h:selectOneMenu>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label>Email</label>
+                                        </td>
+                                        <td>
+                                            <h:inputText id="txtEmail" value="#{transactionManagedBean.user.email}" 
+                                                         required="true" requiredMessage="Email is a required field!" validatorMessage="Email is an invalid format!">
+                                                <f:validateRegex pattern=".+\@.+\..+" ></f:validateRegex>
+                                            </h:inputText>
+                                            <h:message for="txtEmail" class="alert-danger"></h:message>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label>Password</label>
+                                        </td>
+                                        <td>
+                                            <h:inputSecret id="txtPassword" value="#{transactionManagedBean.user.password}" 
+                                                         required="true" requiredMessage="Password is a required field!" validatorMessage="Password is an invalid format! Must be at least 8 characters with one uppercase, one lowercase, and one number!">
+                                                <f:validateRegex pattern="^(?=.*[a-z])(?=.*\d)[a-zA-Z\d]{8,}$" ></f:validateRegex>
+                                            </h:inputSecret>
+                                            <h:message for="txtPassword" class="alert-danger"></h:message>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <label>Street Number</label>
+                                        </td>
+                                        <td>
+                                            <h:inputText id="txtStreetNumber" value="#{transactionManagedBean.newAddress.streetNumber}" 
+                                                         required="true" requiredMessage="Street number is a required field!">
+                                            </h:inputText>
+                                            <h:message for="txtStreetNumber" class="alert-danger"></h:message>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label>Street Name</label>
+                                        </td>
+                                        <td>
+                                            <h:inputText id="txtStreetName" value="#{transactionManagedBean.newAddress.streetAddress}" 
+                                                         required="true" requiredMessage="Street Address is a required field!">
+                                            </h:inputText>
+                                            <h:message for="txtStreetName" class="alert-danger"></h:message>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label>Suburb</label>
+                                        </td>
+                                        <td>
+                                            <h:inputText id="txtSuburb" value="#{transactionManagedBean.newAddress.suburb}" 
+                                                         required="true" requiredMessage="Suburb is a required field!">
+                                            </h:inputText>
+                                            <h:message for="txtSuburb" class="alert-danger"></h:message>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label>Post Code</label>
+                                        </td>
+                                        <td>
+                                            <h:inputText id="txtPost" value="#{transactionManagedBean.newAddress.postcode}" 
+                                                         required="true" requiredMessage="Post code is a required field!" validatorMessage="Please enter a valid post code!">
+                                                <f:validateLength minimum="4" maximum="4" ></f:validateLength>
+                                                <f:validateRegex pattern="(\d{4})" ></f:validateRegex>
+                                                
+                                            </h:inputText>
+                                            <h:message for="txtPost" class="alert-danger"></h:message>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label>State</label>
+                                        </td>
+                                        <td>
+                                            <h:selectOneMenu id="cboStates" class="form-control" value="#{transactionManagedBean.newAddress.state}">
+                                                <f:selectItems value="#{transactionManagedBean.allStates}" var="state" />
+                                            </h:selectOneMenu>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                    <br />
+                    <table id="tblUsers" class="table" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Street Number</th>
+                                <th>Street Name</th>
+                                <th>Suburb</th>
+                                <th>Post Code</th>
+                                <th>State</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ui:repeat id="Myrepeat" value="#{transactionManagedBean.userList}" var="user" varStatus="status" >
+                                <tr onclick="populateTopForm('#{user.bankUserId}','#{user.firstName}','#{user.lastName}','#{user.email}','#{user.type}','#{user.phoneNumber}','#{user.password}','#{user.address.streetNumber}','#{user.address.streetAddress}','#{user.address.suburb}','#{user.address.postcode}','#{user.address.state}')"
+                                    class="hoverStyle">
+                                    <td>#{user.bankUserId}</td>
+                                    <td>#{user.firstName}</td>
+                                    <td>#{user.lastName}</td>
+                                    <td>#{user.email}</td>
+                                    <td>#{user.phoneNumber}</td>
+                                    <td>#{user.address.streetNumber}</td>
+                                    <td>#{user.address.streetAddress}</td>
+                                    <td>#{user.address.suburb}</td>
+                                    <td>#{user.address.postcode}</td>
+                                    <td>#{user.address.state}</td>
+                                </tr>
+                                <script>
+                                        function populateTopForm(id, fn, ln, em, tp, pn, pw, sn, sa, sb, pc, st){
+                                            document.getElementById("myForm:txtId").value = id;
+                                            document.getElementById("myForm:txtFirstName").value = fn;
+                                            document.getElementById("myForm:txtLastName").value = ln;
+                                            document.getElementById("myForm:txtEmail").value = em;
+                                            document.getElementById("myForm:cboType").value = tp;
+                                            document.getElementById("myForm:txtPhone").value = pn;
+                                            document.getElementById("myForm:txtPassword").value = pw;
+                                            document.getElementById("myForm:txtStreetNumber").value = sn;
+                                            document.getElementById("myForm:txtStreetName").value = sa;
+                                            document.getElementById("myForm:txtSuburb").value = sb;
+                                            document.getElementById("myForm:txtPost").value = pc;
+                                            document.getElementById("myForm:cboStates").value = st;
+                                        }
+                                    </script>
+                            </ui:repeat>
+                        </tbody>
+                    </table>
+                    <h:commandButton id="cmdAdd" action="#{transactionManagedBean.addUser()}" value="Add"></h:commandButton>
+                    <h:commandButton id="cmdUpdate" action="#{transactionManagedBean.updateUser()}" value="Update"></h:commandButton>
+                    <h:commandButton id="cmdDelete" action="#{transactionManagedBean.deleteUser()}" value="Delete" ></h:commandButton>
+                    <h:commandButton id="cmdView" action="#{transactionManagedBean.clearUserFilter()}" value="View All" immediate="true"></h:commandButton>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+    
+</html>
